@@ -56,7 +56,13 @@ test('HTTPS gateway protects page and API, blocks OAuth, and never forwards cred
   await run('openssl', ['x509', '-req', '-in', join(folder, 'server.csr'), '-CA', caCert,
     '-CAkey', caKey, '-CAcreateserial', '-out', join(folder, 'cert.pem'), '-days', '1',
     '-sha256', '-extfile', join(folder, 'server.ext')]);
-  await run('openssl', ['verify', '-CAfile', caCert, join(folder, 'cert.pem')]);
+  try {
+    await run('openssl', ['verify', '-CAfile', caCert, join(folder, 'cert.pem')]);
+  } catch {
+    const root = new X509Certificate(await readFile(caCert));
+    const leaf = new X509Certificate(await readFile(join(folder, 'cert.pem')));
+    throw Error(`Test certificate chain invalid: issuer match=${leaf.issuer === root.subject}, signature valid=${leaf.verify(root.publicKey)}, root CA=${root.ca}`);
+  }
   const [key, cert] = await Promise.all(['key.pem', 'cert.pem'].map(file => readFile(join(folder, file))));
   const ca = await readFile(caCert);
   const expectedFingerprint = new X509Certificate(cert).fingerprint256;
