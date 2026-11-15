@@ -1,0 +1,12 @@
+{
+  "name": "ai-nexus",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local multi-AI chat with user-approved collaboration",
+  "scripts": {
+    "start": "sh scripts/start.sh",
+    "check": "node --check scripts/doctor.mjs && sh -n scripts/start.sh && node --check collaboration.mjs && node --check server.mjs && node --check organizer.mjs && node --check workspace.mjs && node --check workspace-changes.mjs && node --check attachments.mjs && node --check smart-route.mjs && node --check memory.mjs && node --check sessions.mjs && node --check library.mjs && node --check project-context.mjs && node --check codex.mjs && node --check claude-code.mjs && node --check chatgpt.mjs && node --check deepseek.mjs && node --check deepseek-config.mjs && node --check tavily.mjs && node --check tavily-config.mjs && node --check mobile-gateway.mjs && node --check mobile-setup.mjs && node --check dist/app.js",
+    "mobile": "node mobile-gateway.mjs",
+    "test": "node --test test/*.test.mjs"
+  }
+}

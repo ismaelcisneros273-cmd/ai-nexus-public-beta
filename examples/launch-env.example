@@ -1,0 +1,7 @@
+# Optional shell environment example. This file is NOT loaded automatically.
+# Set these only if your own network requires a local HTTP proxy.
+# HTTP_PROXY=http://127.0.0.1:YOUR_PROXY_PORT
+# HTTPS_PROXY=http://127.0.0.1:YOUR_PROXY_PORT
+NO_PROXY=127.0.0.1,localhost
+
+# Never put API keys, OAuth tokens, passwords or cookies in this file.

@@ -1,0 +1,38 @@
+name: macOS checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  candidate:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - name: Check out source without saved Git credentials
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Use the minimum supported Node.js version
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22.21.0'
+          package-manager-cache: false
+      - name: Check startup environment
+        env:
+          HOME: ${{ runner.temp }}/ai-nexus-empty-home
+          XDG_CONFIG_HOME: ${{ runner.temp }}/ai-nexus-empty-home/config
+        run: |
+          mkdir -p "$HOME"
+          node --version
+          node scripts/doctor.mjs
+      - name: Check source syntax
+        run: npm run check
+      - name: Run mock tests, including isolated blank-data startup
+        env:
+          HOME: ${{ runner.temp }}/ai-nexus-empty-home
+          XDG_CONFIG_HOME: ${{ runner.temp }}/ai-nexus-empty-home/config
+        run: npm test

@@ -1,0 +1,35 @@
+# Local chats, memories, attachments, credentials, approvals, and backups
+data/
+private/
+agent-workspace/*
+!agent-workspace/.gitkeep
+work/
+
+# Credentials and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.cer
+*.crt
+*.csr
+*.srl
+scripts/com.ai-nexus.local.plist
+
+# Runtime and developer artifacts
+node_modules/
+coverage/
+*.log
+logs/
+*.tmp
+*.bak
+*.swp
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.codex/
+.agents/
