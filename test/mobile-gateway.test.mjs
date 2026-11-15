@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { randomBytes, scryptSync } from 'node:crypto';
+import { randomBytes, scryptSync, X509Certificate } from 'node:crypto';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -56,8 +56,10 @@ test('HTTPS gateway protects page and API, blocks OAuth, and never forwards cred
   await run('openssl', ['x509', '-req', '-in', join(folder, 'server.csr'), '-CA', caCert,
     '-CAkey', caKey, '-CAcreateserial', '-out', join(folder, 'cert.pem'), '-days', '1',
     '-sha256', '-extfile', join(folder, 'server.ext')]);
+  await run('openssl', ['verify', '-CAfile', caCert, join(folder, 'cert.pem')]);
   const [key, cert] = await Promise.all(['key.pem', 'cert.pem'].map(file => readFile(join(folder, file))));
   const ca = await readFile(caCert);
+  const expectedFingerprint = new X509Certificate(cert).fingerprint256;
   const password = 'A-strong-local-test-password', salt = randomBytes(32).toString('hex');
   const auth = { salt, hash: scryptSync(password, Buffer.from(salt, 'hex'), 32).toString('hex') };
   const seen = [];
@@ -71,7 +73,13 @@ test('HTTPS gateway protects page and API, blocks OAuth, and never forwards cred
       headers: { host: `${MOBILE_IP}:${MOBILE_PORT}`, ...extra } }, response => {
       let body = ''; response.on('data', chunk => body += chunk); response.on('end', () => resolve({ status: response.statusCode, body }));
     });
-    req.on('error', reject); req.end();
+    req.on('error', error => {
+      if (error.code === 'UNABLE_TO_VERIFY_LEAF_SIGNATURE') {
+        const peer = req.socket?.getPeerCertificate?.();
+        error.message += ` (direct loopback: ${req.socket?.remoteAddress === '127.0.0.1'}, fixture certificate: ${peer?.fingerprint256 === expectedFingerprint})`;
+      }
+      reject(error);
+    }); req.end();
   });
   try {
     assert.equal((await get('/api/sessions')).status, 401);
