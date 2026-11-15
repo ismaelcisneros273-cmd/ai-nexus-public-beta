@@ -45,11 +45,11 @@ test('HTTPS gateway protects page and API, blocks OAuth, and never forwards cred
   const folder = await mkdtemp(join(tmpdir(), 'ai-nexus-mobile-test-'));
   const run = promisify(execFile);
   const caKey = join(folder, 'ca.key'), caCert = join(folder, 'ca.pem');
-  await run('openssl', ['req', '-x509', '-newkey', 'ec', '-pkeyopt', 'ec_paramgen_curve:P-256', '-nodes',
+  await run('openssl', ['req', '-x509', '-newkey', 'rsa:2048', '-nodes',
     '-keyout', caKey, '-out', caCert, '-days', '1', '-sha256',
     '-subj', '/CN=AI Nexus Test CA', '-addext', 'basicConstraints=critical,CA:TRUE',
     '-addext', 'keyUsage=critical,keyCertSign,cRLSign']);
-  await run('openssl', ['req', '-new', '-newkey', 'ec', '-pkeyopt', 'ec_paramgen_curve:P-256', '-nodes',
+  await run('openssl', ['req', '-new', '-newkey', 'rsa:2048', '-nodes',
     '-keyout', join(folder, 'key.pem'), '-out', join(folder, 'server.csr'), '-subj', `/CN=${MOBILE_IP}`]);
   await writeFile(join(folder, 'server.ext'),
     `basicConstraints=critical,CA:FALSE\nkeyUsage=critical,digitalSignature\nextendedKeyUsage=serverAuth\nsubjectAltName=IP:${MOBILE_IP}\n`);
