@@ -83,7 +83,7 @@ export function createMobileGateway({ key, cert, auth, phone = PHONE_IP, upstrea
     if (req.headers['content-type']) headers['content-type'] = req.headers['content-type'];
     if (req.headers['x-ai-nexus']) headers['x-ai-nexus'] = req.headers['x-ai-nexus'];
     if (req.headers['content-length']) headers['content-length'] = req.headers['content-length'];
-    const upstream = http.request({ hostname: '127.0.0.1', port: upstreamPort, method: req.method, path: req.url, headers, timeout: 300000 }, response => {
+    const upstream = http.request({ hostname: '127.0.0.1', port: upstreamPort, method: req.method, path: req.url, headers, timeout: 300000, agent: false }, response => {
       const safeHeaders = {};
       for (const name of ['content-type', 'cache-control', 'content-security-policy', 'x-content-type-options', 'x-accel-buffering']) {
         if (response.headers[name]) safeHeaders[name] = response.headers[name];

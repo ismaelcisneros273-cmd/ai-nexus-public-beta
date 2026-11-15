@@ -67,7 +67,7 @@ test('HTTPS gateway protects page and API, blocks OAuth, and never forwards cred
   gateway.listen(0, '127.0.0.1'); await once(gateway, 'listening');
   const credentials = 'Basic ' + Buffer.from('nexus:' + password).toString('base64');
   const get = (path, extra = {}) => new Promise((resolve, reject) => {
-    const req = https.request({ host: '127.0.0.1', servername: MOBILE_IP, port: gateway.address().port, path, ca,
+    const req = https.request({ host: '127.0.0.1', servername: MOBILE_IP, port: gateway.address().port, path, ca, agent: false,
       headers: { host: `${MOBILE_IP}:${MOBILE_PORT}`, ...extra } }, response => {
       let body = ''; response.on('data', chunk => body += chunk); response.on('end', () => resolve({ status: response.statusCode, body }));
     });
@@ -85,7 +85,7 @@ test('HTTPS gateway protects page and API, blocks OAuth, and never forwards cred
     wrongSourceGateway.listen(0, '127.0.0.1'); await once(wrongSourceGateway, 'listening');
     try {
       await assert.rejects(new Promise((resolve, reject) => {
-        const req = https.get({ host: '127.0.0.1', port: wrongSourceGateway.address().port, path: '/', ca,
+        const req = https.get({ host: '127.0.0.1', port: wrongSourceGateway.address().port, path: '/', ca, agent: false,
           headers: { host: `${MOBILE_IP}:${MOBILE_PORT}`, authorization: credentials } }, resolve);
         req.on('error', reject);
       }));
