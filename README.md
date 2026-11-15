@@ -1,8 +1,29 @@
-# AI Nexus v0.1.0
+# AI Nexus
 
-本机运行的多 AI 聊天工作台。你可以在同一会话中选择成员、发给全员，或由本地规则智能选择 1–2 位成员。聊天记录保存在自己的 Mac 上；模型调用由各自的官方工具或服务完成。
+**说一次，所有 AI 都知道。**
+**Tell it once. Every AI knows.**
 
-AI Nexus is a local multi-AI chat workspace. Keep one conversation while choosing individual members, broadcasting to enabled members, or using a small local routing rule. Chat history stays on your Mac; model requests use each provider's supported tool or service.
+如果你同时在用 Claude、Codex、ChatGPT，大概已经受够了把同一段项目背景一遍遍复制给每一位。AI Nexus 把它们拉进同一个群聊：共享一份项目记忆，可以单独问某一位，也可以发给全员，让它们在你点头的前提下互相接力。一切都跑在你自己的 Mac 上。
+
+If you juggle Claude, Codex and ChatGPT, you have probably pasted the same project context into each of them more times than you can count. AI Nexus puts them in one group chat with shared project memory: ask one member, broadcast to all, or let them hand work to each other — only with your approval. Everything runs locally on your Mac.
+
+![AI Nexus 首次启动界面 / First-run screen](docs/screenshots/first-run.jpg)
+
+<sub>截图来自候选版真实网页，使用临时空白数据和离线演示成员，不含任何个人聊天、账号或模型请求。Real candidate UI with blank demo data; no personal chats, accounts or model requests.</sub>
+
+## 它能做什么 / What you get
+
+- **一个会话，多位 AI**：单聊、`@` 某位、全员广播，或让本地规则自动挑 1–2 位。One conversation, many AIs: pick a member, `@mention`, broadcast, or let a local rule choose.
+- **共享记忆**：项目背景和笔记只写一次，所有成员都能用上。Shared memory: write project context once, every member can use it.
+- **你说了算的协作**：AI 可以提议交接、讨论或汇总，但每一步都要你批准，没有自动循环。User-approved collaboration: AIs can propose handoffs, discussions or a synthesis, but nothing runs without your OK. No autonomous agent loop.
+- **本机优先**：聊天、记忆、附件都存在你的 Mac；网页只监听 `127.0.0.1`；零 npm 依赖。Local-first: data stays on your Mac, the UI binds to localhost only, no npm dependencies.
+- **不演戏**：没连上的成员显示离线，绝不生成模拟回复。No fake replies: disconnected members show as offline, never simulated.
+
+## 当前状态 / Status
+
+v0.1.0 候选版，macOS 优先。模拟测试套件全部通过（不调用真实模型）；能否收到真实回复取决于你自己的账号、额度和网络。测试在 Linux 上也能跑通，但 Windows / Linux 平台本身尚未适配，**非常欢迎帮忙**。
+
+v0.1.0 release candidate, macOS first. The mock test suite passes (no real model calls); real replies depend on your own accounts, quota and network. Tests also pass on Linux, but Windows/Linux support is not done yet — **contributions welcome**.
 
 ## 快速开始 / Quick start
 
@@ -88,12 +109,6 @@ The optional iPhone hotspot HTTPS gateway is machine/network-specific and is **n
 The [macOS CI workflow](.github/workflows/macos-ci.yml) checks the minimum supported Node version, startup prerequisites, syntax and mock tests (including blank-data startup). It uses a temporary empty home directory for tests and never signs in to an AI provider. It has not yet been run on a GitHub runner; a clean Mac installation and real first reply still require manual verification.
 
 This snapshot is a **release candidate**, not a public release. Original AI Nexus project code is offered under the [MIT license](LICENSE) with the requested copyright line. Bundled `pypdf` and `typing_extensions` retain their own license texts and are not relicensed as MIT. Review [SOURCES_AND_LICENSES.md](SOURCES_AND_LICENSES.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); the maintainer must still confirm original-code and artwork rights before making a repository public. The test attachments now have recorded generation methods, including a real WebP. The existing private Git commit still contains earlier, unverified binary fixtures: **do not switch that repository to Public**. Use a separately reviewed, fresh-history release copy instead.
-
-## 界面截图 / Screenshot
-
-![隔离演示环境中的 AI Nexus 首次启动界面](docs/screenshots/first-run.jpg)
-
-这是从候选版**真实网页**截取的窄窗口首次启动界面。截图使用临时空白数据和隔离的离线演示成员；未使用任何个人聊天、账号或模型请求。This is the real candidate UI in a narrow window with temporary blank data and isolated offline demo members. It is not proof of a clean Mac installation or a working AI connection.
 
 ## 参与改进 / Contributing
 
