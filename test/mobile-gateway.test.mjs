@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { randomBytes, scryptSync } from 'node:crypto';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFile } from 'node:child_process';
@@ -44,12 +44,20 @@ test('access password is checked against a salted hash', async () => {
 test('HTTPS gateway protects page and API, blocks OAuth, and never forwards credentials', async () => {
   const folder = await mkdtemp(join(tmpdir(), 'ai-nexus-mobile-test-'));
   const run = promisify(execFile);
+  const caKey = join(folder, 'ca.key'), caCert = join(folder, 'ca.pem');
   await run('openssl', ['req', '-x509', '-newkey', 'ec', '-pkeyopt', 'ec_paramgen_curve:P-256', '-nodes',
-    '-keyout', join(folder, 'key.pem'), '-out', join(folder, 'cert.pem'), '-days', '1', '-sha256',
-    '-subj', '/CN=AI Nexus Test', '-addext', 'basicConstraints=critical,CA:TRUE',
-    '-addext', `subjectAltName=IP:${MOBILE_IP}`]);
+    '-keyout', caKey, '-out', caCert, '-days', '1', '-sha256',
+    '-subj', '/CN=AI Nexus Test CA', '-addext', 'basicConstraints=critical,CA:TRUE',
+    '-addext', 'keyUsage=critical,keyCertSign,cRLSign']);
+  await run('openssl', ['req', '-new', '-newkey', 'ec', '-pkeyopt', 'ec_paramgen_curve:P-256', '-nodes',
+    '-keyout', join(folder, 'key.pem'), '-out', join(folder, 'server.csr'), '-subj', `/CN=${MOBILE_IP}`]);
+  await writeFile(join(folder, 'server.ext'),
+    `basicConstraints=critical,CA:FALSE\nkeyUsage=critical,digitalSignature\nextendedKeyUsage=serverAuth\nsubjectAltName=IP:${MOBILE_IP}\n`);
+  await run('openssl', ['x509', '-req', '-in', join(folder, 'server.csr'), '-CA', caCert,
+    '-CAkey', caKey, '-CAcreateserial', '-out', join(folder, 'cert.pem'), '-days', '1',
+    '-sha256', '-extfile', join(folder, 'server.ext')]);
   const [key, cert] = await Promise.all(['key.pem', 'cert.pem'].map(file => readFile(join(folder, file))));
-  const ca = cert;
+  const ca = await readFile(caCert);
   const password = 'A-strong-local-test-password', salt = randomBytes(32).toString('hex');
   const auth = { salt, hash: scryptSync(password, Buffer.from(salt, 'hex'), 32).toString('hex') };
   const seen = [];
