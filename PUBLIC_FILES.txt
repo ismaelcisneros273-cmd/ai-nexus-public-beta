@@ -72,6 +72,7 @@ test/sessions.test.mjs
 test/smart-route.test.mjs
 test/tavily.test.mjs
 test/workspace.test.mjs
+vendor/glyphNameFormatter-LICENSE
 vendor/pypdf-LICENSE
 vendor/pypdf/__init__.py
 vendor/pypdf/_cmap.py
