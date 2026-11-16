@@ -34,15 +34,15 @@ v0.1.0 release candidate, macOS first. The mock test suite passes (no real model
 ### 第一次启动 / First launch
 
 1. 自行从上面的 Node 官方网站安装受支持版本，在终端运行 `node -v` 确认。脚本**不会安装软件、索取密码或改变系统设置**。Install a supported Node.js release yourself, then check `node -v` in Terminal. The script never installs software or changes system settings.
-2. 下载并解压本仓库，或从 GitHub 克隆。进入**包含 `package.json` 的目录**；克隆后的目录通常叫 `ai-nexus`，下载 ZIP 时可能不同。Download/clone this repository and enter the folder containing `package.json` (usually `ai-nexus` after cloning).
+2. 下载并解压本仓库，或从 GitHub 克隆。进入**包含 `package.json` 的目录**；默认克隆目录名是 `ai-nexus-public-beta`，下载 ZIP 时可能不同。Download/clone this repository and enter the folder containing `package.json` (normally `ai-nexus-public-beta` after cloning).
 3. 运行 / Run:
 
 ```sh
-cd ai-nexus
+cd ai-nexus-public-beta
 sh scripts/start.sh
 ```
 
-若文件夹名称不是 `ai-nexus`，把第一行换成实际名称；也可在 Finder 中将文件夹拖进终端，进入该文件夹后运行第二行。检查脚本会说明 Node、端口、辅助程序及可选 AI 工具的状态；**找到程序不代表已经登录或能够推理**。脚本检查失败时不会启动服务或终止其他程序。If the folder has another name, adjust the `cd` line. The script checks prerequisites and explains failures; finding a CLI does not prove that an account is signed in. It never stops another process.
+若文件夹名称不同，把第一行换成实际名称；也可在 Finder 中将文件夹拖进终端，进入该文件夹后运行第二行。检查脚本会说明 Node、端口、辅助程序及可选 AI 工具的状态；**找到程序不代表已经登录或能够推理**。脚本检查失败时不会启动服务或终止其他程序。If the folder has another name, adjust the `cd` line. The script checks prerequisites and explains failures; finding a CLI does not prove that an account is signed in. It never stops another process.
 
 在 Mac 浏览器打开 [http://127.0.0.1:4173/](http://127.0.0.1:4173/)。终端保持打开；按 Control-C 停止。初次启动时没有聊天历史、记忆、附件或登录凭据。不要把 4173 端口开放到局域网或互联网。Open the same local address in a Mac browser, keep Terminal open, and press Control-C to stop. A fresh copy starts without anyone else's data or credentials.
 
@@ -106,9 +106,9 @@ The optional iPhone hotspot HTTPS gateway is machine/network-specific and is **n
 
 `npm run check` checks syntax; `npm test` runs isolated mock-based tests without real model or Tavily requests. Browser compatibility and actual provider connectivity depend on your Mac, app versions, login and account eligibility. A green automated test run does not prove a particular provider is connected or that the optional phone gateway is safe on your network.
 
-The [macOS CI workflow](.github/workflows/macos-ci.yml) checks the minimum supported Node version, startup prerequisites, syntax and mock tests (including blank-data startup). It uses a temporary empty home directory for tests and never signs in to an AI provider. It has not yet been run on a GitHub runner; a clean Mac installation and real first reply still require manual verification.
+The [macOS CI workflow](.github/workflows/macos-ci.yml) checks the minimum supported Node version, startup prerequisites, syntax and mock tests (including blank-data startup). It uses a temporary empty home directory for tests and never signs in to an AI provider. It [passed on a GitHub macOS runner](https://github.com/ismaelcisneros273-cmd/ai-nexus-public-beta/actions/runs/43710016442); a clean Mac installation and a first reply using a new user's own account still require manual verification.
 
-This snapshot is a **release candidate**, not a public release. Original AI Nexus project code is offered under the [MIT license](LICENSE) with the requested copyright line. Bundled `pypdf` and `typing_extensions` retain their own license texts and are not relicensed as MIT. Review [SOURCES_AND_LICENSES.md](SOURCES_AND_LICENSES.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); the maintainer must still confirm original-code and artwork rights before making a repository public. The test attachments now have recorded generation methods, including a real WebP. The existing private Git commit still contains earlier, unverified binary fixtures: **do not switch that repository to Public**. Use a separately reviewed, fresh-history release copy instead.
+This snapshot is a **release candidate**, not a public release. Original AI Nexus project code is offered under the [MIT license](LICENSE) with the requested copyright line. Bundled `pypdf` and `typing_extensions` retain their own license texts and are not relicensed as MIT. Review [SOURCES_AND_LICENSES.md](SOURCES_AND_LICENSES.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); the maintainer must still confirm original-code and artwork rights before making a repository public. The test attachments now have recorded generation methods, including a real WebP. The older private `ai-nexus` repository contains earlier, unverified binary fixtures and must remain Private; this separate `ai-nexus-public-beta` repository uses a newly reviewed history.
 
 ## 参与改进 / Contributing
 
