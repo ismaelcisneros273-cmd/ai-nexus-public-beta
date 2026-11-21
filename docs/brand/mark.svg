@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">AI Nexus connected N mark</title>
+  <rect width="256" height="256" rx="64" fill="#ece7e9"/>
+  <path d="M64 183 V72 L188 183 V72" fill="none" stroke="#756b7d" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="64" cy="72" r="17" fill="#c78e9c"/>
+  <circle cx="188" cy="183" r="17" fill="#a4a0bd"/>
+  <circle cx="126" cy="128" r="12" fill="#f7f4f0"/>
+</svg>

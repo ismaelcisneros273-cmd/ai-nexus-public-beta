@@ -1,5 +1,5 @@
-# AI Nexus v0.1.0 proposed public files
-# Generated from the source-only release candidate; no private data is included.
+# AI Nexus v0.1.0 Public Beta source files
+# Generated from the reviewed release branch; runtime data is excluded.
 .gitattributes
 .github/ISSUE_TEMPLATE/bug_report.md
 .github/ISSUE_TEMPLATE/feature_request.md
@@ -25,7 +25,19 @@ deepseek.mjs
 dist/app.js
 dist/index.html
 dist/styles.css
+docs/GETTING_STARTED.md
+docs/RELEASE_NOTES_v0.1.0.md
+docs/brand/BRAND_ASSETS.md
+docs/brand/SHOWCASE_RESEARCH.md
+docs/brand/collaboration-flow.svg
+docs/brand/hero-dark.svg
+docs/brand/hero-light.svg
+docs/brand/mark.svg
+docs/brand/social-preview.png
+docs/brand/social-preview.svg
+docs/screenshots/chat-demo.png
 docs/screenshots/first-run.jpg
+docs/screenshots/member-status-demo.png
 examples/launch-env.example
 library.mjs
 memory.mjs

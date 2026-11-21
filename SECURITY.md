@@ -1,9 +1,11 @@
-# Security policy / 安全报告
+# Security policy
 
-AI Nexus v0.1.0 Public Beta is a local-first release candidate. Supported security fixes target the current beta; there is no public-hosting security guarantee. Keep the service bound to `127.0.0.1` and do not expose it directly to a LAN or the Internet. See [PRIVACY_SECURITY.md](PRIVACY_SECURITY.md) for data and credential handling.
+AI Nexus v0.1.0 is a macOS-first Public Beta. Security fixes focus on the current beta; this is not a promise of hosted-service support or a response-time service level. Start the normal web service on `127.0.0.1` only. Do not expose port 4173 directly to a LAN or the Internet. The optional phone gateway needs a separate, device-specific security review.
 
-如发现漏洞，请在仓库公开且维护者启用 **GitHub Private Vulnerability Reporting** 后，使用仓库的 **Report a vulnerability** 私密入口提交。请勿在公开 Issue、PR、截图或日志中提交利用细节、真实聊天、密钥、Cookie、OAuth 数据或私人路径。
+## Report privately
 
-If private vulnerability reporting is not yet available, open a **non-sensitive** issue asking the maintainer for a private contact channel. Do not include an exploit, secret or private data in that issue. The maintainer must verify a working private reporting channel before announcing the public beta.
+If the repository offers **Report a vulnerability** in its Security tab, use that private GitHub channel. If it is not available, open a public issue **only to request a private contact route**. Do not include the exploit, affected private data, secrets, screenshots of credentials, or reproduction files in that issue. The maintainer should confirm a working private channel before asking you for sensitive details.
 
-The project currently makes no guaranteed response-time promise. Please give the maintainer time to assess and coordinate a fix before public disclosure.
+Please allow time to investigate and coordinate a fix before public disclosure. The project currently makes no guaranteed response-time commitment.
+
+For data flow, credential handling, and local permission boundaries, see [Privacy & security](PRIVACY_SECURITY.md).

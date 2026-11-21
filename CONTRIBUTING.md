@@ -1,20 +1,21 @@
-# Contributing to AI Nexus / 参与贡献
+# Contributing to AI Nexus
 
-Thank you for helping make this small local chat workspace easier to use. 欢迎修复明确的问题、改善首次安装体验并补充可靠测试。
+[Read the product overview](README.md) · [First reply guide](docs/GETTING_STARTED.md) · [Security policy](SECURITY.md)
 
-## Before opening an issue / 提交问题前
+AI Nexus is an early, local-first macOS project. The most helpful contributions are focused fixes, clearer first-run guidance, small accessibility improvements, and tests that reproduce a real problem. Please avoid adding a second workflow for an existing feature or expanding model permissions without a clear user need and review.
 
-- Search existing issues. Describe what you expected, what happened, macOS and Node.js versions, and safe steps to reproduce.
-- Never paste passwords, API keys, OAuth responses, cookies, chat history, attachments, local project files, or unredacted logs. Use a small invented example instead.
-- A connected-status badge is not proof that a model answered; explain whether the result came from a mock test or a real provider call.
-- For security issues, use GitHub's private vulnerability reporting when available. If unavailable, ask the maintainer for a private channel **without posting exploit details or secrets** in a public issue.
+## Before opening an issue
 
-## Pull requests / 提交修改
+Search existing issues. Include the behavior you expected, what happened, macOS and Node.js versions, and safe steps to reproduce. Say whether a result came from a mock test or a real provider call. A connected badge does not prove that a model replied.
 
-1. Keep each PR focused. Preserve existing local data and security boundaries; do not broaden the listening address or add model calls without an explicit reason and review.
-2. Make changes in your own checkout. Run `npm run check` and `npm test`. These checks use local mocks and do not intentionally call paid models.
-3. Explain the user-visible change, tests run, and anything you could not verify on a real Mac or Safari.
-4. Use invented test data. Do not include personal screenshots, private paths, credentials, or generated local `data/` and `private/` files.
-5. If adding third-party code or media, identify its origin and license and update `THIRD_PARTY_NOTICES.md` where appropriate.
+Use invented data. Never attach credentials, OAuth responses, cookies, personal chats, uploaded files, private paths, or unredacted logs. For a vulnerability, follow [SECURITY.md](SECURITY.md) instead of posting exploit details in a public issue.
 
-The original project code is offered under MIT (`LICENSE`); bundled third-party files keep their own licenses (`THIRD_PARTY_NOTICES.md`). Contributors should submit only work they have the right to license under MIT. 原创项目代码采用 MIT，第三方文件仍按原许可；请只提交你有权以 MIT 许可贡献的内容。
+## A small pull request is easier to review
+
+1. Fork or branch from the current `main`. Keep one change focused on one problem.
+2. Run `npm run check` and `npm test`. The test suite uses isolated mocks and is not intended to call paid models or Tavily.
+3. Describe what a user can now do, how you verified it, and what still needs a real Mac, Safari, or provider account.
+4. Preserve local data, authorization checks, and the default `127.0.0.1` binding. Do not add a model call, file write, shell permission, or network listener as a side effect.
+5. If you add code, media, or data from elsewhere, record its source and license. Keep third-party copyright notices; do not relicense their files as project-original MIT work.
+
+Contributors should submit only material they have the right to contribute under the project's MIT license. Provider names and trademarks remain their owners' property. See [SOURCES_AND_LICENSES.md](SOURCES_AND_LICENSES.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
