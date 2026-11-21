@@ -26,11 +26,12 @@ The left side keeps conversations close; the main area shows a shared thread wit
 
 ## What you can do
 
-| In the chat | Under your control |
-| --- | --- |
-| **Keep one thread.** Save conversations locally, search them, pin them, and continue with a different AI without starting over. | **Choose the audience.** Send to a named member, `@` several members, let a local rule select one or two, or broadcast to enabled members. |
-| **Bring context forward.** Selected members receive bounded conversation history; saved global and project memory can also be included. | **Invite collaboration.** Hand a reply to another AI, start one round of group discussion, approve or reject an AI's proposed handoff, or request a final synthesis. |
-| **Work with what you have.** Attach supported documents and images, quote messages, keep bookmarks and to-dos, and optionally search the web through Tavily. | **Keep execution separate.** Session-scoped workspace reading and single-file edits have distinct permission and diff-approval steps. Ordinary chat cannot write files or run shell commands. |
+- **Keep one thread.** Save conversations locally, search and pin them, then continue with a different AI without starting over.
+- **Choose who answers.** Send to a named member, `@` several members, let a local rule select one or two, or broadcast to enabled members.
+- **Bring context forward.** Selected members receive bounded conversation history; saved global and project memory can also be included.
+- **Invite collaboration deliberately.** Hand a reply to another AI, start one group-discussion round, approve or reject a proposed handoff, or request a final synthesis.
+- **Work with what you have.** Attach supported documents and images, quote messages, save bookmarks and to-dos, and optionally search the web through Tavily.
+- **Keep execution separate.** Workspace reading and single-file edits have distinct permission and diff-approval steps. Ordinary chat cannot write files or run shell commands.
 
 The project-memory backend is present, but the global/project memory editor is not surfaced in the simplified v0.1.0 navigation. Treat this as a beta usability limit, not a required setup step. The screenshot above illustrates conversation routing; it does **not** demonstrate a live provider response or memory editing.
 
@@ -52,13 +53,11 @@ For step-by-step troubleshooting, see the [first reply guide](docs/GETTING_START
 
 ## Integrations and honest limits
 
-| Member | v0.1.0 connection path | What to expect |
-| --- | --- | --- |
-| **Claude** and **Claude Code** | One officially signed-in Claude Code CLI | Two visible roles sharing the **same CLI, account, and usage allowance**. Ordinary chat disables CLI tools. |
-| **Codex** | Codex App Server bundled with the official ChatGPT macOS app | Separate from the ChatGPT chat member. Depends on the app's bundled binary, account eligibility, and available usage. Chat tool approvals are denied. |
-| **ChatGPT** | Separate Sign in with ChatGPT backend flow | **No visible first-time authorization control in this beta.** A new install cannot be promised an independent ChatGPT connection; there is no API-key fallback. |
-| **DeepSeek** | Official cloud API, `deepseek-flash` | **Paused by default.** Requires a separate API key and paid balance; it never loads the old local Ollama model automatically. |
-| **Muse** | None | Display-only; it cannot reply. |
+- **Claude / Claude Code:** Both use one officially signed-in Claude Code CLI. They are two visible roles sharing the **same CLI, account, and usage allowance**. Ordinary chat disables CLI tools.
+- **Codex:** Uses the App Server bundled with the official ChatGPT macOS app. It is separate from the ChatGPT chat member and depends on the app's binary, account eligibility, and available usage. Chat tool approvals are denied.
+- **ChatGPT:** Has a separate Sign in with ChatGPT backend flow, but **no visible first-time authorization control in this beta**. A new install cannot be promised an independent ChatGPT connection; there is no API-key fallback.
+- **DeepSeek:** Uses the official cloud API with `deepseek-flash`, but is **paused by default**. It needs a separate API key and paid balance; it does not automatically load the old local Ollama model.
+- **Muse:** Display-only. No connection; it cannot reply.
 
 Optional Tavily web search is off by default and requires its own key and quota. AI Nexus stores chats, memory, attachments, bookmarks and approvals on your Mac, but **messages and selected context leave your Mac when you send them to a provider**. Group send and manual collaboration can make more than one provider call. No provider is advertised as universally free.
 
